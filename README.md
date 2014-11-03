@@ -1,4 +1,4 @@
-RomeCNN
+RomeAggregator
 =======
 
 rome rss feeds
