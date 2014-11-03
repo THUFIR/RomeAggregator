@@ -20,7 +20,7 @@ public class Main {
         } catch (IOException | IllegalArgumentException | FeedException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        log.info("done");
+        log.info("completed:  all feeds processed");
     }
 
 }
