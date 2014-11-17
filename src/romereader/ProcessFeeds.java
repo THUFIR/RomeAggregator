@@ -21,9 +21,9 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public class Populate {
+public class ProcessFeeds {
 
-    private final static Logger log = Logger.getLogger(Populate.class.getName());
+    private final static Logger log = Logger.getLogger(ProcessFeeds.class.getName());
     private LinkJpaController linksController = null;
     private FeedJpaController feedsController = null;
 

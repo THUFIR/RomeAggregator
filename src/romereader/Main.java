@@ -8,7 +8,8 @@ import java.util.logging.Logger;
 public class Main {
 
     private final static Logger log = Logger.getLogger(Main.class.getName());
-    private final Populate populate = new Populate();
+    private final ProcessFeeds feeds = new ProcessFeeds();
+    private final ProcessLinks links = new ProcessLinks();
 
     public static void main(String... args) {
         new Main().getLinks();
@@ -16,11 +17,10 @@ public class Main {
 
     private void getLinks() {
         try {
-            populate.getFeeds();
+            feeds.getFeeds();
         } catch (IOException | IllegalArgumentException | FeedException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
         log.info("completed:  all feeds processed");
     }
-
 }
