@@ -6,7 +6,6 @@
 package dur.bounceme.net.rome.jpa;
 
 import dur.bounceme.net.rome.jpa.exceptions.NonexistentEntityException;
-import dur.bounceme.net.rome.jpa.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -31,18 +30,13 @@ public class PageJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Page page) throws PreexistingEntityException, Exception {
+    public void create(Page page) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             em.persist(page);
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findPage(page.getId()) != null) {
-                throw new PreexistingEntityException("Page " + page + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();

@@ -9,6 +9,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
@@ -25,17 +27,30 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Page.findAll", query = "SELECT p FROM Page p"),
-    @NamedQuery(name = "Page.findById", query = "SELECT p FROM Page p WHERE p.id = :id")})
+    @NamedQuery(name = "Page.findById", query = "SELECT p FROM Page p WHERE p.id = :id"),
+    @NamedQuery(name = "Page.findByCreated", query = "SELECT p FROM Page p WHERE p.created = :created"),
+    @NamedQuery(name = "Page.findByLinkId", query = "SELECT p FROM Page p WHERE p.linkId = :linkId"),
+    @NamedQuery(name = "Page.findByStatus", query = "SELECT p FROM Page p WHERE p.status = :status")})
 public class Page implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(nullable = false)
     private Integer id;
     @Basic(optional = false)
+    @Column(nullable = false, length = 45)
+    private String created;
+    @Basic(optional = false)
     @Lob
     @Column(nullable = false, length = 65535)
     private String page;
+    @Basic(optional = false)
+    @Column(name = "link_id", nullable = false)
+    private int linkId;
+    @Basic(optional = false)
+    @Column(nullable = false)
+    private int status;
 
     public Page() {
     }
@@ -44,9 +59,12 @@ public class Page implements Serializable {
         this.id = id;
     }
 
-    public Page(Integer id, String page) {
+    public Page(Integer id, String created, String page, int linkId, int status) {
         this.id = id;
+        this.created = created;
         this.page = page;
+        this.linkId = linkId;
+        this.status = status;
     }
 
     public Integer getId() {
@@ -57,12 +75,36 @@ public class Page implements Serializable {
         this.id = id;
     }
 
+    public String getCreated() {
+        return created;
+    }
+
+    public void setCreated(String created) {
+        this.created = created;
+    }
+
     public String getPage() {
         return page;
     }
 
     public void setPage(String page) {
         this.page = page;
+    }
+
+    public int getLinkId() {
+        return linkId;
+    }
+
+    public void setLinkId(int linkId) {
+        this.linkId = linkId;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     @Override

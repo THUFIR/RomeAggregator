@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package dur.bounceme.net.rome.jpa;
 
 import java.io.Serializable;
@@ -16,6 +21,10 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ *
+ * @author thufir
+ */
 @Entity
 @Table(name = "links", catalog = "rome_aggregator", schema = "", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"link"})})
@@ -23,8 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Link.findAll", query = "SELECT l FROM Link l"),
     @NamedQuery(name = "Link.findById", query = "SELECT l FROM Link l WHERE l.id = :id"),
-    @NamedQuery(name = "Link.findByFeedId", query = "SELECT l FROM Link l WHERE l.feedId = :feedId"),
     @NamedQuery(name = "Link.findByCreated", query = "SELECT l FROM Link l WHERE l.created = :created"),
+    @NamedQuery(name = "Link.findByFeedId", query = "SELECT l FROM Link l WHERE l.feedId = :feedId"),
     @NamedQuery(name = "Link.findByLink", query = "SELECT l FROM Link l WHERE l.link = :link"),
     @NamedQuery(name = "Link.findByStatus", query = "SELECT l FROM Link l WHERE l.status = :status")})
 public class Link implements Serializable {
@@ -32,20 +41,20 @@ public class Link implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id", nullable = false)
+    @Column(nullable = false)
     private Integer id;
+    @Basic(optional = false)
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created;
     @Basic(optional = false)
     @Column(name = "feed_id", nullable = false)
     private int feedId;
     @Basic(optional = false)
-    @Column(name = "created", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date created;
-    @Basic(optional = false)
-    @Column(name = "link", nullable = false, length = 767)
+    @Column(nullable = false, length = 767)
     private String link;
     @Basic(optional = false)
-    @Column(name = "status", nullable = false)
+    @Column(nullable = false)
     private int status;
 
     public Link() {
@@ -55,10 +64,10 @@ public class Link implements Serializable {
         this.id = id;
     }
 
-    public Link(Integer id, int feedId, Date created, String link, int status) {
+    public Link(Integer id, Date created, int feedId, String link, int status) {
         this.id = id;
-        this.feedId = feedId;
         this.created = created;
+        this.feedId = feedId;
         this.link = link;
         this.status = status;
     }
@@ -71,20 +80,20 @@ public class Link implements Serializable {
         this.id = id;
     }
 
-    public int getFeedId() {
-        return feedId;
-    }
-
-    public void setFeedId(int feedId) {
-        this.feedId = feedId;
-    }
-
     public Date getCreated() {
         return created;
     }
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    public int getFeedId() {
+        return feedId;
+    }
+
+    public void setFeedId(int feedId) {
+        this.feedId = feedId;
     }
 
     public String getLink() {

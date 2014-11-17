@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package dur.bounceme.net.rome.jpa;
 
 import java.io.Serializable;
@@ -16,6 +21,10 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ *
+ * @author thufir
+ */
 @Entity
 @Table(name = "feeds", catalog = "rome_aggregator", schema = "", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"url"})})
@@ -24,21 +33,29 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Feed.findAll", query = "SELECT f FROM Feed f"),
     @NamedQuery(name = "Feed.findById", query = "SELECT f FROM Feed f WHERE f.id = :id"),
     @NamedQuery(name = "Feed.findByCreated", query = "SELECT f FROM Feed f WHERE f.created = :created"),
-    @NamedQuery(name = "Feed.findByUrl", query = "SELECT f FROM Feed f WHERE f.url = :url")})
+    @NamedQuery(name = "Feed.findByAccessed", query = "SELECT f FROM Feed f WHERE f.accessed = :accessed"),
+    @NamedQuery(name = "Feed.findByUrl", query = "SELECT f FROM Feed f WHERE f.url = :url"),
+    @NamedQuery(name = "Feed.findByStatus", query = "SELECT f FROM Feed f WHERE f.status = :status")})
 public class Feed implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id", nullable = false)
+    @Column(nullable = false)
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "created", nullable = false)
+    @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
     @Basic(optional = false)
-    @Column(name = "url", nullable = false, length = 767)
+    @Column(nullable = false, length = 45)
+    private String accessed;
+    @Basic(optional = false)
+    @Column(nullable = false, length = 767)
     private String url;
+    @Basic(optional = false)
+    @Column(nullable = false)
+    private int status;
 
     public Feed() {
     }
@@ -47,10 +64,12 @@ public class Feed implements Serializable {
         this.id = id;
     }
 
-    public Feed(Integer id, Date created, String url) {
+    public Feed(Integer id, Date created, String accessed, String url, int status) {
         this.id = id;
         this.created = created;
+        this.accessed = accessed;
         this.url = url;
+        this.status = status;
     }
 
     public Integer getId() {
@@ -69,12 +88,28 @@ public class Feed implements Serializable {
         this.created = created;
     }
 
+    public String getAccessed() {
+        return accessed;
+    }
+
+    public void setAccessed(String accessed) {
+        this.accessed = accessed;
+    }
+
     public String getUrl() {
         return url;
     }
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     @Override
