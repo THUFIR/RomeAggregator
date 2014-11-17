@@ -4,6 +4,7 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>dur.bounceme.net.rome.jpa.Link</class>
     <class>dur.bounceme.net.rome.jpa.Feed</class>
+    <class>dur.bounceme.net.rome.jpa.Page</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/rome_aggregator?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.password" value="password"/>

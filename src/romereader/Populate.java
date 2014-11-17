@@ -32,7 +32,7 @@ public class Populate {
         feedsController = new FeedJpaController(emf);
         List<Feed> feeds = feedsController.findFeedEntities();
         for (Feed f : feeds) {
-            log.info(f.toString());
+            log.fine(f.toString());
             getLinkFromSyndEntry(f);
         }
     }
@@ -49,17 +49,17 @@ public class Populate {
         log.fine(entries.toString());
         Link link = null;
         for (SyndEntry entry : entries) {
-            log.info(entry.getTitle());
+            log.fine(entry.getTitle());
             link = new Link();
             link.setCreated(new Date());
             link.setLink(entry.getLink());
             linksController.create(link);
         }
-        log.info("..completed");
+        log.fine("..completed");
     }
 
     private List<SyndEntry> getSyndEntryList(Feed f) throws MalformedURLException, IOException, IllegalArgumentException, FeedException {
-        log.info(f.toString());
+        log.fine(f.toString());
         URL url = new URL(f.getUrl());
         HttpURLConnection httpcon = (HttpURLConnection) url.openConnection(Proxy.NO_PROXY);
         SyndFeedInput input = new SyndFeedInput();
