@@ -8,18 +8,22 @@ package dur.bounceme.net.rome.jpa;
 import dur.bounceme.net.rome.jpa.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import romereader.Main;
 
 /**
  *
  * @author thufir
  */
 public class LinkJpaController implements Serializable {
+
+    private final static Logger log = Logger.getLogger(LinkJpaController.class.getName());
 
     public LinkJpaController(EntityManagerFactory emf) {
         this.emf = emf;
@@ -37,6 +41,8 @@ public class LinkJpaController implements Serializable {
             em.getTransaction().begin();
             em.persist(link);
             em.getTransaction().commit();
+        } catch (Exception e) {
+            log.fine(e.toString());
         } finally {
             if (em != null) {
                 em.close();
@@ -133,5 +139,5 @@ public class LinkJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }
